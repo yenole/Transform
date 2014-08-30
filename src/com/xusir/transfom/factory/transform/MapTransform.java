@@ -1,6 +1,8 @@
 package com.xusir.transfom.factory.transform;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -47,6 +49,18 @@ public class MapTransform extends TransformHande {
 					String key = String.format("%s%s", Character.toUpperCase(name.charAt(3)), name.substring(4));
 					Object temp = ReflationUtils.invoke(value, method);
 					ReflationUtils.invoke(map, "put", Object.class, Object.class, key, temp);
+				}
+				return map;
+			} else if (TransformFactory.isSequence(value.getClass())) {
+				if (value instanceof Collection)
+					value = Collection.class.cast(value).toArray();
+				int len = Array.getLength(value);
+				Object map = ReflationUtils.newInstance(clazz);
+				if (map == null)
+					return null;
+				for (int i = 0; i < len; i++) {
+					Object temp = Array.get(value, i);
+					ReflationUtils.invoke(map, "put", Object.class, Object.class, i, temp);
 				}
 				return map;
 			}

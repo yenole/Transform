@@ -55,7 +55,7 @@ public class TransformFactory {
 	}
 
 	public static boolean isPrimitive(Class<?> clazz) {
-		return null != clazz ? Pattern.matches("^(java\\.lang\\.)?([iIlLfFsSdDbBcC](nt(eger)?|ong|loat|hort|ouble|oolean|yte|har(acter)?|tring))$", clazz.getName()) : false;
+		return null != clazz && (Number.class.isAssignableFrom(clazz) || Pattern.matches("^(java\\.lang\\.)?([ilfsSdbBcC](nt|ong|loat|hort|ouble|oolean|yte|har(acter)?|tring))$", clazz.getName()));
 	}
 
 	public static boolean isSequence(Class<?> clazz) {
