@@ -97,10 +97,11 @@ public class TransformFactory {
 			case ']':
 			case '}':
 				if (pos != idx) {
+					String value = text.substring(pos, idx - (text.charAt(idx - 2) == '"' ? 2 : 1)).trim();
 					if (obj instanceof HashMap) {
-						ReflationUtils.invoke(obj, "put", Object.class, Object.class, keys.pop(), text.substring(pos, idx - 1));
+						ReflationUtils.invoke(obj, "put", Object.class, Object.class, keys.pop(), value);
 					} else {
-						ReflationUtils.invoke(obj, "add", Object.class, text.substring(pos, idx - 1));
+						ReflationUtils.invoke(obj, "add", Object.class, value);
 					}
 				}
 				types.pop();
@@ -135,7 +136,7 @@ public class TransformFactory {
 				pos = idx;
 				break;
 			case ':':
-				keys.push(text.substring(pos, (pos = idx) - 1));
+				keys.push(text.substring(pos, (pos = idx) - 2));
 				break;
 			}
 		} while (idx < text.length());

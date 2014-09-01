@@ -2,7 +2,6 @@ package com.xusir.utils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -206,10 +205,8 @@ public class ReflationUtils {
 			return null;
 		try {
 			return isDecalred ? clazz.getDeclaredMethod(name, clazzs) : clazz.getMethod(name, clazzs);
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			Log4jUtils.error(e.getMessage());
 		}
 		return null;
 	}
@@ -228,12 +225,8 @@ public class ReflationUtils {
 			return null;
 		try {
 			return method.invoke(target, args);
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			Log4jUtils.error(e.getMessage());
 		}
 		return null;
 	}

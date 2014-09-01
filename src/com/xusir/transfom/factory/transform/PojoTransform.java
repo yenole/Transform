@@ -36,8 +36,8 @@ public class PojoTransform extends TransformHande {
 				}
 				if (null == result)
 					continue;
-				Class<?> targetClazz = result.getClass();
 				result = this.factory.transform(result, method.getParameterTypes()[0]);
+				Class<?> targetClazz = result.getClass();
 				if (targetClazz == String.class || targetClazz == Character.class)
 					result = ((String) result).substring(1, ((String) result).length() - 1);
 				ReflationUtils.invoke(pojo, method, result);
